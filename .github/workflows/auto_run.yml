@@ -3,7 +3,7 @@ name: UN Job Auto Pipeline
 on:
   schedule:
     - cron: '0 0 12,27 * *'
-  workflow_dispatch: # 允许手动点击按钮测试
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,29 +20,22 @@ jobs:
     - name: 安装依赖
       run: |
         pip install -r requirements.txt
-        # 必须安装浏览器内核及 Linux 系统依赖
         python -m playwright install --with-deps chromium
 
-    - name: 运行爬虫
-      run: python crawler.py
-
-    - name: 运行 AI 处理
+    - name: 运行主程序 (main.py)
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        # 强制指定输出文件名，确保与后面的发邮件脚本完全一致
+        OUTPUT_DOCX_PATH: un_internships.docx 
       run: |
-        # 检查有没有生成 raw_data.json
-        if [ -f "raw_data.json" ]; then
-          python ai_processor.py
-        else
-          echo "未发现待处理数据，跳过 AI 步骤。"
-        fi
+        # 直接运行总控脚本，它会自动处理爬取、JSON保存和Word生成
+        python main.py
 
     - name: 发送邮件
       env:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       run: |
-        # 检查有没有生成最终的 docx
         if [ -f "un_internships.docx" ]; then
           python send_email.py
         else
