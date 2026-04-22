@@ -16,8 +16,7 @@ def get_pipeline_today() -> date:
     """
     raw = (os.getenv("PIPELINE_SIMULATED_DATE") or "").strip()
     if not raw:
-        #return date.today()
-        return date(2026, 4, 12)
+        return date.today()
     return date.fromisoformat(raw)
 
 
@@ -28,7 +27,7 @@ def is_scrape_day(today: Optional[date] = None) -> bool:
     :param today: 可选，用于测试注入；默认使用系统当天日期。
     """
     d = today if today is not None else date.today()
-    return d.day in (12, 27)
+    return d.day in (12, 22,27)
 
 
 def _parse_un_date(s: str) -> date:
