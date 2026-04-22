@@ -1,0 +1,39 @@
+name: UN Job Auto Pipeline
+
+on:
+  schedule:
+    # 这里的 0 0 12,27 * * 代表每月 12日和 27日的 UTC 0点（北京时间上午8点）
+    - cron: '0 0 12,27 * *'
+  workflow_dispatch: # 这个选项让你可以在网页上手动点击运行，用于测试
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v3
+
+    - name: 设置 Python 环境
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: 安装依赖
+      run: |
+        pip install -r requirements.txt
+        playwright install chromium
+
+    - name: 运行爬虫与 AI 处理
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      run: |
+        # 按照你的文件名依次执行
+        python crawler.py
+        python ai_processor.py
+
+    - name: 发送邮件
+      env:
+        EMAIL_USER: ${{ secrets.EMAIL_USER }}
+        EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+      run: python send_email.py
