@@ -1,0 +1,28 @@
+# 环境变量
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+
+# 数据文件
+raw_data.json
+test_results.json
+
+# Playwright
+playwright-report/
+test-results/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# 数据文件
+*.json
+
+# 文档
+*.docx
