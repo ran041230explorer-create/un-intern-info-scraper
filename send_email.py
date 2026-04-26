@@ -19,7 +19,7 @@ def send_docx():
     msg['Subject'] = "【自动提醒】联合国实习岗位更新报告"
     msg['From'] = sender_email
     msg['To'] = receiver_email
-    msg.set_content("亲爱的 Tian Ran，本月最新的联合国实习筛选结果已附件，请查收。")
+    msg.set_content("亲爱的主人，本月最新的联合国实习筛选结果已附件，请查收。")
 
     with open(docx_file, 'rb') as f:
         file_data = f.read()
