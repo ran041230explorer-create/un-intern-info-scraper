@@ -54,7 +54,7 @@ python -m playwright install --with-deps chromium
 ```
 
 ### 3) 配置环境变量
-复制一份 `.env.example` 为 `.env`，填入：
+创建一份 `.env`，填入：
 - `GEMINI_API_KEY`
 - `EMAIL_USER`
 - `EMAIL_PASS`
