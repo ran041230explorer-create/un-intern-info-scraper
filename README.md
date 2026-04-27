@@ -25,7 +25,7 @@ AI就是我的航空母舰。**
 ---
 
 ## 系统流程（Pipeline）
-1. data_logic.py: 编写日期处理与过滤逻辑
+1. data_logic.py: 编写日期处理与过滤逻辑（12号爬取ddl在当月20日后的岗位、20号爬取ddl在次月7日后的）
 2. crawler.py: 官网列表页爬取与随机抽样
 3. detail_fetcher.py: 实习链接详情页信息抓取
 4. ai_processor.py: 借助LLM提取关键信息与翻译 + 调整格式并输出word
